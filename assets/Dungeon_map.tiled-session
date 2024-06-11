@@ -1,0 +1,26 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        }
+    },
+    "last.imagePath": "C:/Users/utkue/Documents/goodGame/assets/UI",
+    "map.height": 120,
+    "map.lastUsedFormat": "json",
+    "map.width": 120,
+    "openFiles": [
+    ],
+    "project": "Dungeon_map.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+    ],
+    "tileset.embedInMap": true
+}
