@@ -82,7 +82,7 @@
     },
     "last.exportedFilePath": "C:/Users/utkue/Documents/goodGame/assets",
     "last.externalTilesetPath": "C:/Users/utkue/Documents/goodGame/assets",
-    "last.imagePath": "C:/Users/utkue/Documents/goodGame/assets",
+    "last.imagePath": "C:/Users/utkue/Documents/goodGame/assets/Players",
     "last.worldFilePath": "C:/Users/utkue/Documents",
     "loadedWorlds": [
     ],
@@ -102,5 +102,5 @@
         "dungeon-map-1.tmx"
     ],
     "tileset.embedInMap": true,
-    "tileset.useTransparentColor": true
+    "tileset.useTransparentColor": false
 }

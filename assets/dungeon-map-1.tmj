@@ -7535,7 +7535,7 @@
         {
          "columns":24,
          "firstgid":852,
-         "image":"propsItems.png",
+         "image":"Props_and_items\/propsItems.png",
          "imageheight":704,
          "imagewidth":768,
          "margin":0,
@@ -7543,8 +7543,7 @@
          "spacing":0,
          "tilecount":528,
          "tileheight":32,
-         "tilewidth":32,
-         "transparentcolor":"#ff00ff"
+         "tilewidth":32
         }],
  "tilewidth":32,
  "type":"map",
