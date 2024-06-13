@@ -1,25 +1,10 @@
-// Jim Whitehead
-// Created: 5/26/2024
-// Phaser: 3.80.0
-//
-// Pathfinder demo
-//
-// An example of pathfinding in Phaser using the EasyStar.js pathfinder 
-// https://github.com/prettymuchbryce/easystarjs
-// 
-// Assets from the following Kenney Asset packs
-// Tiny Dungeon
-// https://kenney.nl/assets/tiny-dungeon
-//
-// Tiny Town
-// https://kenney.nl/assets/tiny-town
-//
 
 
+"use strict"
 // game config
 let config = {
     parent: 'phaser-game',
-    type: Phaser.CANVAS,
+    type: Phaser.CANVAS, 
     render: {
         pixelArt: true  // prevent pixel art from getting blurred when scaled
     },
@@ -35,11 +20,11 @@ let config = {
     },
     width: 1280,
     height: 800,
-    scene: [Load, Pathfinder, Game]
+    scene: [Load, Game]
 }
 
 var cursors;
 const SCALE = 2.0;
-var my = {sprite: {}};
+var my = {sprite: {}, text: {}, vfx: {}};
 
 const game = new Phaser.Game(config);
