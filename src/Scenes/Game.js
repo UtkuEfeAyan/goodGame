@@ -14,7 +14,6 @@ class Game extends Phaser.Scene {
         this.TILEHEIGHT = 80;
         this.TILEWIDTH = 120;
         this.dashing = false; // Add a flag to check if the dash key is held down
-        this.lastDirection = 'right'; // Add a variable to track the last direction
     }
 
     create() {
@@ -76,7 +75,7 @@ class Game extends Phaser.Scene {
         this.backgroundMusic.play();
 
         // Load sound effects
-        this.gunSound = this.sound.add("gunSound", { volume: 0.1 });
+        this.gunSound = this.sound.add("gunSound", { volume: 0.3 });
         this.walkSound = this.sound.add("walkSound", { volume: 2.0 });
 
         this.wKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
@@ -116,7 +115,6 @@ class Game extends Phaser.Scene {
             my.sprite.player.setVelocityX(-this.ACCELERATION);
             my.sprite.player.setFlip(true, false);
             my.sprite.player.anims.play('walk', true);
-            this.lastDirection = 'left';
             my.vfx.walking.startFollow(my.sprite.player, my.sprite.player.displayWidth / 2 - 10, my.sprite.player.displayHeight / 2 - 5, false);
             my.vfx.walking.setParticleSpeed(this.PARTICLE_VELOCITY, 0);
             if (!this.walkingSoundPlaying) {
@@ -128,7 +126,6 @@ class Game extends Phaser.Scene {
             my.sprite.player.setVelocityX(this.ACCELERATION);
             my.sprite.player.resetFlip();
             my.sprite.player.anims.play('walk', true);
-            this.lastDirection = 'right';
             my.vfx.walking.startFollow(my.sprite.player, my.sprite.player.displayWidth / 2 - 10, my.sprite.player.displayHeight / 2 - 5, false);
             my.vfx.walking.setParticleSpeed(this.PARTICLE_VELOCITY, 0);
             if (!this.walkingSoundPlaying) {
@@ -139,7 +136,6 @@ class Game extends Phaser.Scene {
         } else if (this.wKey.isDown) {
             my.sprite.player.setVelocityY(-this.ACCELERATION);
             my.sprite.player.anims.play('walk', true);
-            this.lastDirection = 'up';
             my.vfx.walking.startFollow(my.sprite.player, my.sprite.player.displayWidth / 2 - 10, my.sprite.player.displayHeight / 2 - 5, false);
             my.vfx.walking.setParticleSpeed(0, -this.PARTICLE_VELOCITY);
             if (!this.walkingSoundPlaying) {
@@ -150,7 +146,6 @@ class Game extends Phaser.Scene {
         } else if (this.sKey.isDown) {
             my.sprite.player.setVelocityY(this.ACCELERATION);
             my.sprite.player.anims.play('walk', true);
-            this.lastDirection = 'down';
             my.vfx.walking.startFollow(my.sprite.player, my.sprite.player.displayWidth / 2 - 10, my.sprite.player.displayHeight / 2 - 5, false);
             my.vfx.walking.setParticleSpeed(0, this.PARTICLE_VELOCITY);
             if (!this.walkingSoundPlaying) {
@@ -173,26 +168,30 @@ class Game extends Phaser.Scene {
         }
 
         // Handle dashing with the space bar
-        if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
-            this.dash();
+        if (this.spaceKey.isDown) {
+            if (!this.dashing) {
+                this.dashing = true; // Set flag to prevent continuous dashing
+                this.dash();
+            }
+        } else {
+            this.dashing = false; // Reset flag when space key is released
         }
     }
 
     dash() {
-        const dashDistance = 64;
-        switch (this.lastDirection) {
-            case 'left':
-                my.sprite.player.x -= dashDistance;
-                break;
-            case 'right':
-                my.sprite.player.x += dashDistance;
-                break;
-            case 'up':
-                my.sprite.player.y -= dashDistance;
-                break;
-            case 'down':
-                my.sprite.player.y += dashDistance;
-                break;
+        const dashSpeed = 500;
+        if (this.aKey.isDown) {
+            my.sprite.player.setVelocityX(-dashSpeed);
+        } else if (this.dKey.isDown) {
+            my.sprite.player.setVelocityX(dashSpeed);
+        } else if (this.wKey.isDown) {
+            my.sprite.player.setVelocityY(-dashSpeed);
+        } else if (this.sKey.isDown) {
+            my.sprite.player.setVelocityY(dashSpeed);
         }
+        // Add a short delay to the dash to simulate a quick movement
+        this.time.delayedCall(100, () => {
+            my.sprite.player.setVelocity(0);
+        });
     }
 }

@@ -5,6 +5,7 @@ class Load extends Phaser.Scene {
 
     preload() {
         this.load.setPath("./assets/");
+
         // Load player sprite atlas
         this.load.atlas("playerRed", "Players/playerRed.png", "Players/playerRed.json");
         // Load tilemap information
@@ -15,15 +16,25 @@ class Load extends Phaser.Scene {
         // Load particle effects if any
         this.load.multiatlas("kenny-particles", "kenny-particles.json");
 
-        // Load audio
         this.load.audio("backgroundMusic", "/audio/Tricky.mp3");
+
+        this.load.spritesheet("tilemap_sheet", "Props_and_items/propsItems.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        });
+console.log();
+
+
+// Load sound effects
+        this.load.audio("gunSound", "/audio/gun.mp3");
+        this.load.audio("coinSound", "/audio/coin.mp3");
         this.load.audio("walkSound", "/audio/walk.mp3");
 
-        // Load enemy sprite atlas
-        this.load.atlas("enemies", "enemies.png", "path/to/enemies.json");
+
     }
 
     create() {
+
         this.anims.create({
             key: 'walk',
             frames: this.anims.generateFrameNames('playerRed', {
@@ -60,45 +71,23 @@ class Load extends Phaser.Scene {
             repeat: -1
         });
 
-        // Enemy animations
         this.anims.create({
-            key: 'enemyWalk',
-            frames: this.anims.generateFrameNames('enemies', {
-                prefix: "walk_",
-                start: 1,
-                end: 4,
+            key: 'gun',
+            frames: this.anims.generateFrameNames('playerRed', {
+                prefix: "gun_",
+                start: 3,
+                end: 3,
                 suffix: ".png"
             }),
-            frameRate: 10,
+            frameRate: 60,
             repeat: -1
         });
-
-        this.anims.create({
-            key: 'enemyShoot',
-            frames: this.anims.generateFrameNames('enemies', {
-                prefix: "shoot_",
-                start: 0,
-                end: 4,
-                suffix: ".png"
-            }),
-            frameRate: 10,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: 'enemyDeath',
-            frames: this.anims.generateFrameNames('enemies', {
-                prefix: "dead_",
-                start: 1,
-                end: 4,
-                suffix: ".png"
-            }),
-            frameRate: 10,
-            repeat: 0
-        });
-
+        
+        
         // Pass to the next Scene
         this.scene.start("gameScene");
+
+
     }
 
     update() {

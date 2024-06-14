@@ -18,8 +18,8 @@ let config = {
             }
         }
     },
-    width: 500,
-    height: 300,
+    width: 1200,
+    height: 800,
     scene: [Load, Game]
 }
 
