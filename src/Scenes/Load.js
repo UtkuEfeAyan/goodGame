@@ -20,6 +20,16 @@ class Load extends Phaser.Scene {
         this.load.audio("walkSound", "audio/walk.mp3");
         
         this.load.audio("deathSound", "audio/death.mp3");
+        
+        this.load.audio("shootSound", "audio/gun.mp3");
+
+        this.load.image('bullet1', 'bullet1.png');
+    
+    // Load enemy bullet sprite
+        this.load.image('bullet2', 'bullet2.png');
+
+
+
 
         this.load.atlas("enemies", "Enemies/enemies.png", "Enemies/enemies.json");
 
@@ -72,18 +82,6 @@ class Load extends Phaser.Scene {
             frames: this.anims.generateFrameNames('enemies', {
                 prefix: "walk_",
                 start: 1,
-                end: 4,
-                suffix: ".png"
-            }),
-            frameRate: 10,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: 'enemyShoot',
-            frames: this.anims.generateFrameNames('enemies', {
-                prefix: "shoot_",
-                start: 0,
                 end: 4,
                 suffix: ".png"
             }),

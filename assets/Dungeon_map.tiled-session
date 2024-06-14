@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "dungeon-map-1.tmx",
+    "activeFile": "dungeon-map-1.tmj",
     "expandedProjectPaths": [
         "."
     ],
@@ -43,11 +43,11 @@
             "expandedObjectLayers": [
                 6
             ],
-            "scale": 0.5,
+            "scale": 0.33,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 844,
-                "y": 606
+                "x": 875.7575757575758,
+                "y": 1366.6666666666667
             }
         },
         "dungeon-map-1.tmj#enemies": {
@@ -100,7 +100,7 @@
     "map.lastUsedFormat": "json",
     "map.width": 120,
     "openFiles": [
-        "dungeon-map-1.tmx"
+        "dungeon-map-1.tmj"
     ],
     "project": "Dungeon_map.tiled-project",
     "property.type": "bool",
