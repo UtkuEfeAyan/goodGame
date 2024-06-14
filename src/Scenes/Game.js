@@ -16,6 +16,8 @@ class Game extends Phaser.Scene {
         this.dashing = false; // Add a flag to check if the dash key is held down
         this.lastDirection = 'right'; // Add a variable to track the last direction
         this.isPlayerAlive = true; // Add a flag to check if the player is alive
+        this.playerShootCooldown = 500; // 500 milliseconds (adjust as needed)
+        this.lastPlayerShootTime = 0; // Track the timestamp of the last shot
     }
 
     create() {
@@ -55,7 +57,7 @@ class Game extends Phaser.Scene {
         this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
         this.cameras.main.startFollow(my.sprite.player, true, 0.5, 0.5);
         this.cameras.main.setDeadzone(30, 30);
-        this.cameras.main.setZoom(2);
+        this.cameras.main.setZoom(1.5);
     
         // Background music
         this.backgroundMusic = this.sound.add("backgroundMusic", { volume: 0.5 }, { loop: true });
@@ -87,10 +89,10 @@ class Game extends Phaser.Scene {
     
         // Add enemies at specified locations
         const enemySpawnLocations = [
-            [1964, 1077], [1144, 996], [787, 888], [344, 956],
-            [668, 324], [1000, 400], [1453, 544], [1673, 352],
-            [3300, 250], [3300, 850], [3400, 1380], [3430, 1817],
-            [2820, 1174], [2217, 1476], [420, 384], [1000, 533]
+            [1964, 1077], [1144, 996], [787, 888], [344, 956], [670,324], [2128, 446], [2400, 1364], [3326, 1505],
+            [668, 324], [1000, 400], [1453, 544], [1673, 352], [1288, 980], [1241, 346], [2100, 1700], [3560, 2116],
+            [3300, 250], [3300, 850], [3400, 1380], [3430, 1817],[1760, 1044], [2178, 1104], [ 1660, 1508], [3571, 328],
+            [2820, 1174], [2217, 1476], [420, 384], [1000, 533], [1200, 200], [1851, 1569], [2943, 1309], [2784, 736]
         ];
     
         this.enemies = this.add.group();
@@ -112,7 +114,7 @@ class Game extends Phaser.Scene {
         });
     
         // Add coin counter text
-        this.coinText = this.add.text(this.cameras.main.width - 192, 16, `Coins: ${this.coinCounter}`, { fontSize: '32px', fill: '#fff' });
+        this.coinText = this.add.text(this.cameras.main.width - 384, 160, `Coins: ${this.coinCounter}`, { fontSize: '32px', fill: '#fff' });
         this.coinText.setScrollFactor(0);
     
         // Create player bullets group
@@ -220,7 +222,11 @@ class Game extends Phaser.Scene {
 
         // Handle shooting with the attack key
         if (Phaser.Input.Keyboard.JustDown(this.attackKey)) {
-            this.shootBullet(my.sprite.player, my.sprite.playerBullets);
+            const currentTime = this.time.now;
+            if (currentTime > this.lastPlayerShootTime + this.playerShootCooldown) {
+                this.shootBullet(my.sprite.player, my.sprite.playerBullets);
+                this.lastPlayerShootTime = currentTime; // Update last shoot time
+            }
         }
 
         // Check if player is standing on a tile
@@ -258,7 +264,7 @@ class Game extends Phaser.Scene {
         my.sprite.player.setVelocity(0, 0); // Stop player movement
         my.sprite.player.anims.play('death');
         this.deathSound.play(); // Play death sound
-        this.add.text(this.cameras.main.worldView.x + this.cameras.main.width / 2, this.cameras.main.worldView.y + this.cameras.main.height / 2, 'Game Over', { fontSize: '64px', fill: '#ff0000' }).setOrigin(0.5);
+        this.add.text(this.cameras.main.worldView.x + this.cameras.main.width / 3, this.cameras.main.worldView.y + this.cameras.main.height / 3, 'Game Over', { fontSize: '64px', fill: '#ff0000' }).setOrigin(0.5);
         this.time.delayedCall(2000, () => {
             this.scene.restart();
             this.backgroundMusic.stop();
