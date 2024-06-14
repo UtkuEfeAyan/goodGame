@@ -76,7 +76,7 @@ class Game extends Phaser.Scene {
         this.backgroundMusic.play();
 
         // Load sound effects
-        this.gunSound = this.sound.add("gunSound", { volume: 0.3 });
+        this.gunSound = this.sound.add("gunSound", { volume: 0.1 });
         this.walkSound = this.sound.add("walkSound", { volume: 2.0 });
 
         this.wKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
