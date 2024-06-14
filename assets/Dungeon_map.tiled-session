@@ -44,15 +44,24 @@
                 6
             ],
             "scale": 0.5,
-            "selectedLayer": 0,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 686,
-                "y": 302
+                "x": 844,
+                "y": 606
             }
+        },
+        "dungeon-map-1.tmj#enemies": {
+            "scaleInDock": 1
         },
         "dungeon-map-1.tmj#props-and-items": {
             "scaleInDock": 3,
             "scaleInEditor": 1
+        },
+        "dungeon-map-1.tmj#propsItems": {
+            "scaleInDock": 0.75
+        },
+        "dungeon-map-1.tmj#tileset": {
+            "scaleInDock": 1
         },
         "dungeon-map-1.tmj#tileset-x1": {
             "scaleInDock": 1
@@ -82,7 +91,7 @@
     },
     "last.exportedFilePath": "C:/Users/utkue/Documents/goodGame/assets",
     "last.externalTilesetPath": "C:/Users/utkue/Documents/goodGame/assets",
-    "last.imagePath": "C:/Users/utkue/Documents/goodGame/assets/Players",
+    "last.imagePath": "C:/Users/utkue/Documents/goodGame/assets/Enemies",
     "last.worldFilePath": "C:/Users/utkue/Documents",
     "loadedWorlds": [
     ],
@@ -96,6 +105,7 @@
     "project": "Dungeon_map.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "dungeon-map-1.tmj",
         "props-and-items.tsx",
         "C:/Users/utkue/Downloads/Pathfinder/assets/tiny-town-tileset.tmx",
         "C:/Users/utkue/Downloads/gamePlatform/assets/platformer-level-1.tmx",

@@ -1,32 +1,33 @@
+
+
+
 class Load extends Phaser.Scene {
     constructor() {
         super("loadScene");
     }
 
     preload() {
+        
         this.load.setPath("./assets/");
-        // Load player sprite atlas
         this.load.atlas("playerRed", "Players/playerRed.png", "Players/playerRed.json");
-        // Load tilemap information
         this.load.image("tiles", "tileset.png");
         this.load.image("items_props", "Props_and_items/propsItems.png");
-        this.load.tilemapTiledJSON("dungeon-map-1", "dungeon-map-1.tmj");   // Tilemap in JSON
+        this.load.tilemapTiledJSON("dungeon-map-1", "dungeon-map-1.tmj");
 
-        // Load particle effects if any
         this.load.multiatlas("kenny-particles", "kenny-particles.json");
-
-        // Load audio
         this.load.audio("backgroundMusic", "audio/Tricky.mp3");
+        
         this.load.audio("walkSound", "audio/walk.mp3");
+        
+        this.load.audio("deathSound", "audio/death.mp3");
 
-        // Load enemy sprite atlas
         this.load.atlas("enemies", "Enemies/enemies.png", "Enemies/enemies.json");
 
         this.load.spritesheet("tilemap_sheet", "Props_and_items/propsItems.png", {
             frameWidth: 32,
             frameHeight: 32
         });
-console.log();
+
     }
 
     create() {
@@ -63,10 +64,9 @@ console.log();
                 suffix: ".png"
             }),
             frameRate: 30,
-            repeat: -1
+            repeat: 0
         });
 
-        // Enemy animations
         this.anims.create({
             key: 'enemyWalk',
             frames: this.anims.generateFrameNames('enemies', {
@@ -103,13 +103,9 @@ console.log();
             repeat: 0
         });
 
-        // Pass to the next Scene
-        this.scene.start("mainmenu");
+        this.scene.start("mainMenu");
     }
 
     update() {
-        // Preload logic if needed
     }
 }
-
-       

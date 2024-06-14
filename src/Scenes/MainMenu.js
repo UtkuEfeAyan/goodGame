@@ -3,7 +3,7 @@ class MainMenu extends Phaser.Scene
 {
     constructor ()
     {
-        super({ key: 'mainmenu' });
+        super({ key: 'mainMenu' });
         window.MENU = this;
     }
     preload ()
@@ -25,9 +25,8 @@ class MainMenu extends Phaser.Scene
 
         bg.once('pointerup', function ()
         {
-
             this.scene.start('gameScene');
-
+            
         }, this);
     }
 }

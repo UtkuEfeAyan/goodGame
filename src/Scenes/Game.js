@@ -15,6 +15,7 @@ class Game extends Phaser.Scene {
         this.TILEWIDTH = 120;
         this.dashing = false; // Add a flag to check if the dash key is held down
         this.lastDirection = 'right'; // Add a variable to track the last direction
+        this.isPlayerAlive = true; // Add a flag to check if the player is alive
     }
 
     create() {
@@ -59,10 +60,11 @@ class Game extends Phaser.Scene {
 
         this.physics.add.overlap(my.sprite.player, this.coinGroup, (obj1, obj2) => {
             obj2.destroy(); // remove coin on overlap
+            this.updateCoinCounter(); // update coin counter
         });
 
         // Set world bounds to match the tilemap width only
-        this.physics.world.setBounds(0, 0, Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER);
+        this.physics.world.setBounds(0, 0, this.map.widthInPixels, this.map.heightInPixels);
 
         // Set camera bounds to match the tilemap size
         this.cameras.main.startFollow(my.sprite.player, true, 0.5, 0.5);
@@ -77,6 +79,7 @@ class Game extends Phaser.Scene {
 
         // Load sound effects
         this.walkSound = this.sound.add("walkSound", { volume: 2.0 });
+        this.deathSound = this.sound.add("deathSound", { volume: 1.0 });
 
         this.wKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
         this.aKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -86,22 +89,36 @@ class Game extends Phaser.Scene {
         this.rKey = this.input.keyboard.addKey('R');
 
         my.vfx.walking = this.add.particles(0, 0, "kenny-particles", {
-            frame: ['smoke_2.png', 'spark_3.png'],
+            frame: ['smoke_02.png', 'spark_03.png'],
             scale: { start: 0.01, end: 0.04 },
             lifespan: 300,
             alpha: { start: 1, end: 0.1 },
         });
-        my.vfx.walking.stop();
 
-        // Add an enemy sprite and play walk animation
-        this.enemy = this.physics.add.sprite(300, 300, 'enemies', 'walk_1.png');
+        // Add an enemy sprite and make it move in random directions
+        this.enemy = this.physics.add.sprite(256, 256, 'enemies', 'walk_1.png');
         this.enemy.anims.play('enemyWalk', true);
+        this.time.addEvent({
+            delay: 2000,
+            callback: () => {
+                this.moveEnemyRandomly(this.enemy);
+            },
+            loop: true
+        });
 
-        // Add collision between player and enemy
+        this.physics.add.collider(this.enemy, this.wallsLayer);
         this.physics.add.collider(my.sprite.player, this.enemy, this.handlePlayerEnemyCollision, null, this);
+
+        // Add coin counter text
+        this.coinText = this.add.text(this.cameras.main.width - 192, 16, `Coins: ${this.coinCounter}`, { fontSize: '32px', fill: '#fff' });
+        this.coinText.setScrollFactor(0);
     }
 
     update() {
+        if (!this.isPlayerAlive) {
+            return; // Stop update logic if the player is dead
+        }
+
         if (Phaser.Input.Keyboard.JustDown(this.rKey)) {
             this.scene.restart();
             this.backgroundMusic.stop();
@@ -197,13 +214,43 @@ class Game extends Phaser.Scene {
     }
 
     killPlayer() {
+        this.isPlayerAlive = false; // Set the player alive flag to false
         my.sprite.player.setTint(0xff0000);
-        this.scene.restart();
-        this.backgroundMusic.stop();
+        my.sprite.player.setVelocity(0, 0); // Stop player movement
+        my.sprite.player.anims.play('death');
+        this.deathSound.play(); // Play death sound
+        this.add.text(this.cameras.main.worldView.x + this.cameras.main.width / 2, this.cameras.main.worldView.y + this.cameras.main.height / 2, 'Game Over', { fontSize: '64px', fill: '#ff0000' }).setOrigin(0.5);
+        this.time.delayedCall(2000, () => {
+            this.scene.restart();
+            this.backgroundMusic.stop();
+            this.walkSound.stop();
+        }, [], this);
     }
 
     handlePlayerEnemyCollision(player, enemy) {
+        if (!this.isPlayerAlive) {
+            return;
+        }
         player.setTint(0xff0000); // Change color to indicate collision
         this.killPlayer();
+    }
+
+    moveEnemyRandomly(enemy) {
+        const directions = [
+            { x: 0, y: -1 },  // up
+            { x: 0, y: 1 },   // down
+            { x: -1, y: 0 },  // left
+            { x: 1, y: 0 }    // right
+        ];
+
+        const direction = Phaser.Math.RND.pick(directions);
+        const speed = 100;
+
+        enemy.setVelocity(direction.x * speed, direction.y * speed);
+    }
+
+    updateCoinCounter() {
+        this.coinCounter++;
+        this.coinText.setText(`Coins: ${this.coinCounter}`);
     }
 }
