@@ -38,26 +38,56 @@ console.log();
         this.anims.create({
             key: 'walk',
             frames: this.anims.generateFrameNames('playerRed', {
-                prefix: "10",
+                prefix: "run_",
                 start: 1,
-                end: 5,
+                end: 3,
                 suffix: ".png",
-                zeroPad: 4
+            }),
+            frameRate: 10,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'idle',
+            frames: this.anims.generateFrameNames('playerRed', {
+                prefix: "idle_",
+                start: 1,
+                end: 2,
+                suffix: ".png"
             }),
             frameRate: 15,
             repeat: -1
         });
 
         this.anims.create({
-            key: 'idle',
-            defaultTextureKey: "playerred",
-            frames: [
-                { frame: "idlr.png" }
-            ],
+            key: 'death',
+            frames: this.anims.generateFrameNames('playerRed', {
+                prefix: "death_",
+                start: 1,
+                end: 5,
+                suffix: ".png"
+            }),
+            frameRate: 30,
             repeat: -1
         });
+
+        this.anims.create({
+            key: 'gun',
+            frames: this.anims.generateFrameNames('playerRed', {
+                prefix: "gun_",
+                start: 3,
+                end: 3,
+                suffix: ".png"
+            }),
+            frameRate: 60,
+            repeat: -1
+        });
+        
+        
         // Pass to the next Scene
         this.scene.start("gameScene");
+
+
     }
 
     update() {
