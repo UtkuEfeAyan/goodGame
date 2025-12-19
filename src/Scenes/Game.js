@@ -344,6 +344,9 @@ class Game extends Phaser.Scene {
             bullet.setActive(true);
             bullet.setVisible(true);
             this.physics.world.enable(bullet);
+            bullet.setScale(0.1); // Set smaller size for bullets
+            bullet.body.setSize(8, 8);
+            bullet.body.offset.set(4, 4);
             bullet.body.velocity.set(0); // Reset velocity
     
             if (shooter === my.sprite.player) {
