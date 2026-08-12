@@ -20,6 +20,11 @@ let config = {
     },
     width: 1200,
     height: 800,
+    scale: {
+        mode: Phaser.Scale.FIT,
+        parent: 'phaser-game',
+        autoCenter: Phaser.Scale.CENTER_BOTH,
+    },
     scene: [Load, MainMenu, Game]
 }
 
